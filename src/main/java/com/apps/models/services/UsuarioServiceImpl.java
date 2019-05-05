@@ -19,9 +19,9 @@ import com.apps.models.dao.IUsuarioDao;
 import com.apps.models.entity.Usuario;
 
 @Service
-public class UsuarioService implements UserDetailsService {
+public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService {
 	
-	private Logger logger = LoggerFactory.getLogger(UsuarioService.class);
+	private Logger logger = LoggerFactory.getLogger(UsuarioServiceImpl.class);
 
 	@Autowired
 	private IUsuarioDao usuarioDao;
@@ -44,6 +44,12 @@ public class UsuarioService implements UserDetailsService {
 
 		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true,
 				authorities);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Usuario findByUsername(String username) {
+		return usuarioDao.findByUsername(username);
 	}
 
 }

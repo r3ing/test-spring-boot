@@ -32,11 +32,16 @@ public class Usuario implements Serializable {
 
 	private Boolean enabled;
 
-	private static final long serialVersionUID = 1L;
+	private String nombre;
+	
+	private String apellido;
+
+	@Column(unique = true)
+	private String email;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), 
-	uniqueConstraints = {@UniqueConstraint(columnNames = { "usuario_id", "role_id" }) })
+	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), uniqueConstraints = {
+			@UniqueConstraint(columnNames = { "usuario_id", "role_id" }) })
 	private List<Role> roles;
 
 	public Long getId() {
@@ -79,4 +84,32 @@ public class Usuario implements Serializable {
 		this.roles = roles;
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 }
